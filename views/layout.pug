@@ -11,29 +11,18 @@ html(lang='en')
   body
     div(class='container-fluid')
       div(class='row')
-        div(class='col-sm-2')
+        div(class='col-sm-5')
           block sidebar
             ul(class='sidebar-nav')
               li 
-                a(href='/catalog') Home
-              li 
-                a(href='/catalog/books') All books
-              li 
-                a(href='/catalog/authors') All authors
-              li 
-                a(href='/catalog/genres') All genres
-              li 
-                a(href='/catalog/bookinstances') All book-instances
+                a(href='/catalog') /users
               li 
                 hr
               li 
-                a(href='/catalog/author/create') Create new author
+                a(href='/api/diagrams') /api/diagrams
               li 
-                a(href='/catalog/genre/create') Create new genre
+                a(href='/api/diagrams') /api/diagrams
               li 
-                a(href='/catalog/book/create') Create new book
+                a(href='/api/diagrams') /api/diagrams
               li 
-                a(href='/catalog/bookinstance/create') Create new book instance (copy)
-                
-        div(class='col-sm-10')
           block content
