@@ -39,10 +39,7 @@ router.get(
 
 router.post("/user/:userId/course/", course_controller.course_post);
 
-router.put(
-  "/user/:userId/course/:courseId",
-  course_controller.course_update_by_id
-);
+router.put("/user/:userId/course/:courseId", course_controller.course_post);
 
 router.delete(
   "/user/:userId/course/:courseId",
@@ -66,12 +63,12 @@ router.post("/user/:userId/course/courseId/task/", task_controller.task_post);
 
 router.put(
   "/user/:userId/course/courseId/task/:taskId",
-  task_controller.task_update_by_id
+  task_controller.task_post
 );
 
 router.delete(
   "/user/:userId/course/courseId/task/:taskId",
-  task_controller.task_delete_by_id
+  task_controller.task_delete
 );
 
 module.exports = router;

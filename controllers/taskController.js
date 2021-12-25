@@ -1,4 +1,4 @@
-var Task = require("../models/task");
+var Task = require("../models/taskModel");
 
 const { body, validationResult } = require("express-validator");
 

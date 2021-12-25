@@ -64,7 +64,7 @@ exports.course_post = [
 ];
 
 exports.course_get_all_from_a_user = function (req, res, next) {
-  Course.find({ userId: req.params.userId }, function (err, courses) {
+  Course.find({ teacherId: req.params.userId }, function (err, courses) {
     if (err) {
       res.status(500).json({
         error: err,
@@ -73,6 +73,20 @@ exports.course_get_all_from_a_user = function (req, res, next) {
     res.status(200).json({
       message: "Courses retrieved successfully",
       data: courses,
+    });
+  });
+};
+
+exports.course_delete_by_id = function (req, res, next) {
+  Course.findByIdAndRemove(req.params.courseId, function (err, course) {
+    if (err) {
+      res.status(500).json({
+        error: err,
+      });
+    }
+    res.status(200).json({
+      message: "Course deleted successfully",
+      data: course,
     });
   });
 };
