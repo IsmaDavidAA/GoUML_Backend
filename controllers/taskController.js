@@ -115,17 +115,16 @@ exports.task_delete = function (req, res, next) {
   });
 };
 
-exports.task_delete = function (req, res, next) {
-  Task.findByIdAndRemove(req.params.taskId, function (err, task) {
+exports.task_get_all_in_a_course = function (req, res, next) {
+  Task.find({ courseId: req.params.courseId }, function (err, tasks) {
     if (err) {
       res.status(500).json({
         error: err,
       });
     }
     res.status(200).json({
-      message: "Task deleted successfully",
-      data: task,
+      message: "Tasks retrieved successfully",
+      data: tasks,
     });
   });
 };
-

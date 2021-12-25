@@ -63,7 +63,7 @@ exports.course_post = [
   },
 ];
 
-exports.course_get_all_of_user = function (req, res, next) {
+exports.course_get_all_from_a_user = function (req, res, next) {
   Course.find({ userId: req.params.userId }, function (err, courses) {
     if (err) {
       res.status(500).json({

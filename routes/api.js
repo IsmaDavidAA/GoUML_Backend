@@ -29,7 +29,7 @@ router.get("/user/:userId/course/", course_controller.course_get_all);
 
 router.get(
   "/user/:userId/course/:courseId",
-  course_controller.course_get_all_of_user
+  course_controller.course_get_all_from_a_user
 );
 
 router.get(
@@ -52,6 +52,11 @@ router.delete(
 // Task Routes
 
 router.get("/user/:userId/course/courseId/task/", task_controller.task_get_all);
+
+router.get(
+  "/user/:userId/course/courseId/task/",
+  task_controller.task_get_all_in_a_course
+);
 
 router.get(
   "/user/:userId/course/courseId/task/:taskId",
