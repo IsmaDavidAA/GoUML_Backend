@@ -29,6 +29,11 @@ router.get("/user/:userId/course/", course_controller.course_get_all);
 
 router.get(
   "/user/:userId/course/:courseId",
+  course_controller.course_get_all_of_user
+);
+
+router.get(
+  "/user/:userId/course/:courseId",
   course_controller.course_get_by_id
 );
 
