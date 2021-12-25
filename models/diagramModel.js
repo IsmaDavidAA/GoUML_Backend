@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var DiagramSchema = new Schema({
   diagramName: { type: String, required: true, maxLength: 100 },
   creationDate: { type: Date },
+  userId: { type: Schema.Types.ObjectId, ref: "User" },
   classes: Object,
 });
 
