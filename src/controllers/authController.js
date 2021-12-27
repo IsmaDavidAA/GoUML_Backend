@@ -17,10 +17,10 @@ exports.signup = async (req, res) => {
     });
     // checking for roles
     if (req.body.roles) {
-      const foundRoles = await Role.find({ name: { $in: roles } });
+      const foundRoles = await Role.find({ roleName: { $in: roles } });
       newUser.roles = foundRoles.map((role) => role._id);
     } else {
-      const role = await Role.findOne({ name: "user" });
+      const role = await Role.findOne({ roleName: "user" });
       newUser.roles = [role._id];
     }
     // Saving the User Object in Mongodb
