@@ -1,10 +1,10 @@
-import { authJwt } from "../middleware";
-import { verifySignup } from "../middleware";
+import { authJwt, verifySignup } from "../middleware";
 var express = require("express");
 var router = express.Router();
 var diagram_controller = require("../controllers/diagramController");
 var course_controller = require("../controllers/courseController");
 var task_controller = require("../controllers/taskController");
+var user_controller = require("../controllers/userController");
 var auth = require("../controllers/authController");
 // Diagram Routes
 router.post(
@@ -96,5 +96,37 @@ router.post(
 );
 
 router.post("/auth/signin", auth.signin);
+
+//User Routes
+
+router.get(
+  "/user/",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_get_all
+);
+
+router.get(
+  "/user/:userId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_get_by_id
+);
+
+router.post(
+  "/user/",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_post
+);
+
+router.put(
+  "/user/:userId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_put
+);
+
+router.delete(
+  "/user/:userId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_delete
+);
 
 module.exports = router;
