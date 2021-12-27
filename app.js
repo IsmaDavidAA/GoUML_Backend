@@ -48,7 +48,7 @@ app.use(function (req, res, next) {
   next(createError(404));
 });
 createRoles();
-// createAdmin();
+createAdmin();
 
 // error handler
 app.use(function (err, req, res, next) {
