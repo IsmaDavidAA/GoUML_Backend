@@ -1,5 +1,6 @@
+import bcrypt from "bcryptjs";
 var mongoose = require("mongoose");
-
+var async = require("async");
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
@@ -7,12 +8,21 @@ var UserSchema = new Schema({
   email: { type: String, required: true, maxLength: 100 },
   password: { type: String, required: true, maxLength: 100 },
   creationDate: { type: Date },
+  roles: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Role",
+    },
+  ],
 });
+UserSchema.statics.encryptPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
 
-// Virtual for author's URL
-UserSchema.virtual("url").get(function () {
-  return "/api/users/" + this._id;
-});
+UserSchema.statics.comparePassword = async (password, receivedPassword) => {
+  return await bcrypt.compare(password, receivedPassword);
+};
 
 //Export model
 module.exports = mongoose.model("User", UserSchema);

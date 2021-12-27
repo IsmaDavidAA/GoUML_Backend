@@ -3,6 +3,7 @@ var router = express.Router();
 var diagram_controller = require("../controllers/diagramController");
 var course_controller = require("../controllers/courseController");
 var task_controller = require("../controllers/taskController");
+var auth = require("../controllers/authController");
 // Diagram Routes
 router.post("/user/:userId/diagram/", diagram_controller.diagram_post);
 
@@ -70,5 +71,11 @@ router.delete(
   "/user/:userId/course/courseId/task/:taskId",
   task_controller.task_delete
 );
+
+//Auth Routes
+
+router.post("/auth/signup", auth.signup);
+
+router.post("/auth/signin", auth.signin);
 
 module.exports = router;
