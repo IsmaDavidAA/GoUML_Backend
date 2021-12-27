@@ -1,10 +1,17 @@
+import { authJwt, verifySignup } from "../middleware";
 var express = require("express");
 var router = express.Router();
 var diagram_controller = require("../controllers/diagramController");
 var course_controller = require("../controllers/courseController");
 var task_controller = require("../controllers/taskController");
+var user_controller = require("../controllers/userController");
+var auth = require("../controllers/authController");
 // Diagram Routes
-router.post("/user/:userId/diagram/", diagram_controller.diagram_post);
+router.post(
+  "/user/:userId/diagram/",
+  [authJwt.verifyToken, authJwt.isModerator],
+  diagram_controller.diagram_post
+);
 
 router.get("/user/:userId/diagram/", diagram_controller.diagram_get_all);
 
@@ -15,11 +22,13 @@ router.get(
 
 router.put(
   "/user/:userId/diagram/:diagramId",
+  [authJwt.verifyToken, authJwt.isModerator],
   diagram_controller.diagram_update_by_id
 );
 
 router.delete(
   "/user/:userId/diagram/:diagramId",
+  [authJwt.verifyToken, authJwt.isModerator],
   diagram_controller.diagram_delete_by_id
 );
 
@@ -69,6 +78,55 @@ router.put(
 router.delete(
   "/user/:userId/course/courseId/task/:taskId",
   task_controller.task_delete
+);
+
+//Auth Routes
+router.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
+
+router.post(
+  "/auth/signup",
+  [verifySignup.checkDuplicateUserNameOrEmail, verifySignup.checkRolesExisted],
+  auth.signup
+);
+
+router.post("/auth/signin", auth.signin);
+
+//User Routes
+
+router.get(
+  "/user/",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_get_all
+);
+
+router.get(
+  "/user/:userId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_get_by_id
+);
+
+router.post(
+  "/user/",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_post
+);
+
+router.put(
+  "/user/:userId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_put
+);
+
+router.delete(
+  "/user/:userId",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  user_controller.user_delete
 );
 
 module.exports = router;

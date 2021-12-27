@@ -1,31 +1,43 @@
-#! /usr/bin/env node
+import Role from "./src/models/rolesModel";
+import User from "./src/models/userModel";
+import bcrypt from "bcryptjs";
+import async from "async";
 
-console.log(
-  "This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: populatedb mongodb+srv://cooluser:coolpassword@cluster0.a9azn.mongodb.net/local_library?retryWrites=true"
-);
+export const createRoles = async () => {
+  try {
+    // Count Documents
+    const count = await Role.estimatedDocumentCount();
 
-// Get arguments passed on command line
-var userArgs = process.argv.slice(2);
-/*
-if (!userArgs[0].startsWith('mongodb')) {
-    console.log('ERROR: You need to specify a valid mongodb URL as the first argument');
-    return
-}
-*/
-var async = require("async");
-var Book = require("./models/book");
-var Author = require("./models/author");
-var Genre = require("./models/genre");
-var BookInstance = require("./models/bookinstance");
+    // check for existing roles
+    if (count > 0) return;
 
-var mongoose = require("mongoose");
-var mongoDB = userArgs[0];
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
+    // Create default Roles
+    const values = await Promise.all([
+      new Role({ roleName: "user" }).save(),
+      new Role({ roleName: "moderator" }).save(),
+      new Role({ roleName: "admin" }).save(),
+    ]);
 
-var authors = [];
-var genres = [];
-var books = [];
-var bookinstances = [];
+    console.log(values);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const createAdmin = async () => {
+  // check for an existing admin user
+  const user = await User.findOne({ email: "admin@localhost" });
+  // get roles _id
+  const roles = await Role.find({ roleName: { $in: ["admin", "moderator"] } });
+
+  if (!user) {
+    // create a new admin user
+    await User.create({
+      userName: "admin",
+      email: "admin@localhost",
+      password: await bcrypt.hash("admin", 10),
+      roles: roles.map((role) => role._id),
+    });
+    console.log("Admin User Created!");
+  }
+};
