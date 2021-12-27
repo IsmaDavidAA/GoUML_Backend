@@ -1,4 +1,5 @@
 import { authJwt } from "../middleware";
+import { verifySignup } from "../middleware";
 var express = require("express");
 var router = express.Router();
 var diagram_controller = require("../controllers/diagramController");
@@ -80,8 +81,19 @@ router.delete(
 );
 
 //Auth Routes
+router.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Headers",
+    "x-access-token, Origin, Content-Type, Accept"
+  );
+  next();
+});
 
-router.post("/auth/signup", auth.signup);
+router.post(
+  "/auth/signup",
+  [verifySignup.checkDuplicateUserNameOrEmail, verifySignup.checkRolesExisted],
+  auth.signup
+);
 
 router.post("/auth/signin", auth.signin);
 
