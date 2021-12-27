@@ -4,15 +4,15 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var api = require("./routes/api");
+var indexRouter = require("./src/routes/index");
+var usersRouter = require("./src/routes/users");
+var api = require("./src/routes/api.routes");
 
 var compression = require("compression");
 var helmet = require("helmet");
 
 var app = express();
-
+app.listen(3000);
 // Set up mongoose connection
 var mongoose = require("mongoose");
 var dev_db_url =
