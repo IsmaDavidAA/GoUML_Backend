@@ -1,9 +1,8 @@
-import Role from "../models/rolesModel";
-import User from "../models/userModel";
-import bcrypt from "bcryptjs";
-import async from "async";
+var Role = require("../models/rolesModel");
+var User = require("../models/userModel");
+var bcrypt = require("bcryptjs");
 
-export const createRoles = async () => {
+module.exports.createRoles = async () => {
   try {
     // Count Documents
     const count = await Role.estimatedDocumentCount();
@@ -24,7 +23,7 @@ export const createRoles = async () => {
   }
 };
 
-export const createAdmin = async () => {
+module.exports.createAdmin = async () => {
   // check for an existing admin user
   const user = await User.findOne({ email: "admin@localhost" });
   // get roles _id

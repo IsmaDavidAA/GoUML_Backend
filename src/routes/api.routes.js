@@ -1,4 +1,5 @@
-import { authJwt, verifySignup } from "../middleware";
+var middlewareAuth = require("../middleware/authJwt");
+var middlewareVerifySign = require("../middleware/verifySignup");
 var express = require("express");
 var router = express.Router();
 var diagram_controller = require("../controllers/diagramController");
@@ -9,7 +10,11 @@ var auth = require("../controllers/authController");
 // Diagram Routes
 router.post(
   "/user/:userId/diagram/",
-  [authJwt.verifyToken, authJwt.isStudent, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isStudent,
+    middlewareAuth.isAdmin,
+  ],
   diagram_controller.diagram_post
 );
 
@@ -22,13 +27,21 @@ router.get(
 
 router.put(
   "/user/:userId/diagram/:diagramId",
-  [authJwt.verifyToken, authJwt.isStudent, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isStudent,
+    middlewareAuth.isAdmin,
+  ],
   diagram_controller.diagram_update_by_id
 );
 
 router.delete(
   "/user/:userId/diagram/:diagramId",
-  [authJwt.verifyToken, authJwt.isStudent, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isStudent,
+    middlewareAuth.isAdmin,
+  ],
   diagram_controller.diagram_delete_by_id
 );
 
@@ -36,37 +49,49 @@ router.delete(
 
 router.get(
   "/user/:userId/course/",
-  [authJwt.verifyToken],
+  [middlewareAuth.verifyToken],
   course_controller.course_get_all
 );
 
 router.get(
   "/user/:userId/course/:courseId",
-  [authJwt.verifyToken],
+  [middlewareAuth.verifyToken],
   course_controller.course_get_all_from_a_user
 );
 
 router.get(
   "/user/:userId/course/:courseId",
-  [authJwt.verifyToken],
+  [middlewareAuth.verifyToken],
   course_controller.course_get_by_id
 );
 
 router.post(
   "/user/:userId/course/",
-  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isTeacher,
+    middlewareAuth.isAdmin,
+  ],
   course_controller.course_post
 );
 
 router.put(
   "/user/:userId/course/:courseId",
-  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isTeacher,
+    middlewareAuth.isAdmin,
+  ],
   course_controller.course_post
 );
 
 router.delete(
   "/user/:userId/course/:courseId",
-  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isTeacher,
+    middlewareAuth.isAdmin,
+  ],
   course_controller.course_delete_by_id
 );
 
@@ -74,36 +99,48 @@ router.delete(
 
 router.get(
   "/user/:userId/course/courseId/task/",
-  [authJwt.verifyToken],
+  [middlewareAuth.verifyToken],
   task_controller.task_get_all
 );
 
 router.get(
   "/user/:userId/course/courseId/task/",
-  [authJwt.verifyToken],
+  [middlewareAuth.verifyToken],
   task_controller.task_get_all_in_a_course
 );
 
 router.get(
   "/user/:userId/course/courseId/task/:taskId",
-  [authJwt.verifyToken],
+  [middlewareAuth.verifyToken],
   task_controller.task_get_by_id
 );
 router.post(
   "/user/:userId/course/courseId/task/",
-  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isTeacher,
+    middlewareAuth.isAdmin,
+  ],
   task_controller.task_post
 );
 
 router.put(
   "/user/:userId/course/courseId/task/:taskId",
-  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isTeacher,
+    middlewareAuth.isAdmin,
+  ],
   task_controller.task_post
 );
 
 router.delete(
   "/user/:userId/course/courseId/task/:taskId",
-  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  [
+    middlewareAuth.verifyToken,
+    middlewareAuth.isTeacher,
+    middlewareAuth.isAdmin,
+  ],
   task_controller.task_delete
 );
 
@@ -118,7 +155,10 @@ router.use((req, res, next) => {
 
 router.post(
   "/auth/signup",
-  [verifySignup.checkDuplicateUserNameOrEmail, verifySignup.checkRolesExisted],
+  [
+    middlewareVerifySign.checkDuplicateUserNameOrEmail,
+    middlewareVerifySign.checkRolesExisted,
+  ],
   auth.signup
 );
 
@@ -128,31 +168,31 @@ router.post("/auth/signin", auth.signin);
 
 router.get(
   "/user/",
-  [authJwt.verifyToken, authJwt.isAdmin],
+  [middlewareAuth.verifyToken, middlewareAuth.isAdmin],
   user_controller.user_get_all
 );
 
 router.get(
   "/user/:userId",
-  [authJwt.verifyToken, authJwt.isAdmin],
+  [middlewareAuth.verifyToken, middlewareAuth.isAdmin],
   user_controller.user_get_by_id
 );
 
 router.post(
   "/user/",
-  [authJwt.verifyToken, authJwt.isAdmin],
+  [middlewareAuth.verifyToken, middlewareAuth.isAdmin],
   user_controller.user_post
 );
 
 router.put(
   "/user/:userId",
-  [authJwt.verifyToken, authJwt.isAdmin],
+  [middlewareAuth.verifyToken, middlewareAuth.isAdmin],
   user_controller.user_put
 );
 
 router.delete(
   "/user/:userId",
-  [authJwt.verifyToken, authJwt.isAdmin],
+  [middlewareAuth.verifyToken, middlewareAuth.isAdmin],
   user_controller.user_delete
 );
 

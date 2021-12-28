@@ -1,9 +1,9 @@
-import jwt from "jsonwebtoken";
-import config from "../config/config";
-import User from "../models/userModel";
-import Role from "../models/rolesModel";
+var jwt = require("jsonwebtoken");
+var config = require("../config/config");
+var User = require("../models/userModel");
+var Role = require("../models/rolesModel");
 
-export const verifyToken = async (req, res, next) => {
+module.exports.verifyToken = async (req, res, next) => {
   let token = req.headers["x-access-token"];
 
   if (!token) return res.status(403).json({ message: "No token provided" });
@@ -21,7 +21,7 @@ export const verifyToken = async (req, res, next) => {
   }
 };
 
-export const isTeacher = async (req, res, next) => {
+module.exports.isTeacher = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
     const roles = await Role.find({ _id: { $in: user.roles } });
@@ -40,7 +40,7 @@ export const isTeacher = async (req, res, next) => {
   }
 };
 
-export const isStudent = async (req, res, next) => {
+module.exports.isStudent = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
     const roles = await Role.find({ _id: { $in: user.roles } });
@@ -59,7 +59,7 @@ export const isStudent = async (req, res, next) => {
   }
 };
 
-export const isAdmin = async (req, res, next) => {
+module.exports.isAdmin = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
     const roles = await Role.find({ _id: { $in: user.roles } });

@@ -1,4 +1,4 @@
-import bcrypt from "bcryptjs";
+var bcrypt = require("bcryptjs");
 var mongoose = require("mongoose");
 var async = require("async");
 var Schema = mongoose.Schema;

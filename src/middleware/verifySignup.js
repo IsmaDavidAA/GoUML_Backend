@@ -1,7 +1,6 @@
-import User from "../models/userModel";
-import { ROLES } from "../models/rolesModel";
-
-const checkDuplicateUserNameOrEmail = async (req, res, next) => {
+var User = require("../models/userModel");
+var ROLES = require("../models/rolesModel");
+module.exports.checkDuplicateUserNameOrEmail = async (req, res, next) => {
   try {
     const user = await User.findOne({ userName: req.body.userName });
     if (user)
@@ -15,7 +14,7 @@ const checkDuplicateUserNameOrEmail = async (req, res, next) => {
   }
 };
 
-const checkRolesExisted = (req, res, next) => {
+module.exports.checkRolesExisted = (req, res, next) => {
   if (req.body.roles) {
     // for (let i = 0; i < req.body.roles.length; i++) {
     //   if (!ROLES.includes(req.body.roles[i])) {
@@ -27,5 +26,3 @@ const checkRolesExisted = (req, res, next) => {
   }
   next();
 };
-
-export { checkDuplicateUserNameOrEmail, checkRolesExisted };

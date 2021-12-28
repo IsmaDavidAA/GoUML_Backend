@@ -1,6 +1,5 @@
-import { config } from "dotenv";
-config();
+var config = require("dotenv").config();
 
-export default {
+module.export = {
   SECRET: "uml-api",
 };

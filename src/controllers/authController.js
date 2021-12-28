@@ -1,7 +1,7 @@
-import User from "../models/userModel";
-import Role from "../models/rolesModel";
-import jwt from "jsonwebtoken";
-import config from "../config/config";
+var User = require("../models/userModel");
+var Role = require("../models/rolesModel");
+var jwt = require("jsonwebtoken");
+var config = require("dotenv");
 
 var async = require("async");
 
