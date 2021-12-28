@@ -3,10 +3,10 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var populateDB = require("./config/populatedb");
+var populateDB = require("./src/config/populatedb");
 
-var indexRouter = require("./routes/index");
-var api = require("./routes/api.routes");
+var indexRouter = require("./src/routes/index");
+var api = require("./src/routes/api.routes");
 
 var compression = require("compression");
 var helmet = require("helmet");
