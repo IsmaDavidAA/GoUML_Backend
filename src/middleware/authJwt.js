@@ -21,19 +21,38 @@ export const verifyToken = async (req, res, next) => {
   }
 };
 
-export const isModerator = async (req, res, next) => {
+export const isTeacher = async (req, res, next) => {
   try {
     const user = await User.findById(req.userId);
     const roles = await Role.find({ _id: { $in: user.roles } });
 
     for (let i = 0; i < roles.length; i++) {
-      if (roles[i].roleName === "moderator") {
+      if (roles[i].roleName === "teacher") {
         next();
         return;
       }
     }
 
-    return res.status(403).json({ message: "Require Moderator Role!" });
+    return res.status(403).json({ message: "Require Teacher Role!" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({ message: error });
+  }
+};
+
+export const isStudent = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.userId);
+    const roles = await Role.find({ _id: { $in: user.roles } });
+
+    for (let i = 0; i < roles.length; i++) {
+      if (roles[i].roleName === "student") {
+        next();
+        return;
+      }
+    }
+
+    return res.status(403).json({ message: "Require Student Role!" });
   } catch (error) {
     console.log(error);
     return res.status(500).send({ message: error });

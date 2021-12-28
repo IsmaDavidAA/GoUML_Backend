@@ -9,7 +9,7 @@ var auth = require("../controllers/authController");
 // Diagram Routes
 router.post(
   "/user/:userId/diagram/",
-  [authJwt.verifyToken, authJwt.isModerator],
+  [authJwt.verifyToken, authJwt.isStudent, authJwt.isAdmin],
   diagram_controller.diagram_post
 );
 
@@ -22,61 +22,88 @@ router.get(
 
 router.put(
   "/user/:userId/diagram/:diagramId",
-  [authJwt.verifyToken, authJwt.isModerator],
+  [authJwt.verifyToken, authJwt.isStudent, authJwt.isAdmin],
   diagram_controller.diagram_update_by_id
 );
 
 router.delete(
   "/user/:userId/diagram/:diagramId",
-  [authJwt.verifyToken, authJwt.isModerator],
+  [authJwt.verifyToken, authJwt.isStudent, authJwt.isAdmin],
   diagram_controller.diagram_delete_by_id
 );
 
 // Course Routes
 
-router.get("/user/:userId/course/", course_controller.course_get_all);
+router.get(
+  "/user/:userId/course/",
+  [authJwt.verifyToken],
+  course_controller.course_get_all
+);
 
 router.get(
   "/user/:userId/course/:courseId",
+  [authJwt.verifyToken],
   course_controller.course_get_all_from_a_user
 );
 
 router.get(
   "/user/:userId/course/:courseId",
+  [authJwt.verifyToken],
   course_controller.course_get_by_id
 );
 
-router.post("/user/:userId/course/", course_controller.course_post);
+router.post(
+  "/user/:userId/course/",
+  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  course_controller.course_post
+);
 
-router.put("/user/:userId/course/:courseId", course_controller.course_post);
+router.put(
+  "/user/:userId/course/:courseId",
+  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  course_controller.course_post
+);
 
 router.delete(
   "/user/:userId/course/:courseId",
+  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
   course_controller.course_delete_by_id
 );
 
 // Task Routes
 
-router.get("/user/:userId/course/courseId/task/", task_controller.task_get_all);
+router.get(
+  "/user/:userId/course/courseId/task/",
+  [authJwt.verifyToken],
+  task_controller.task_get_all
+);
 
 router.get(
   "/user/:userId/course/courseId/task/",
+  [authJwt.verifyToken],
   task_controller.task_get_all_in_a_course
 );
 
 router.get(
   "/user/:userId/course/courseId/task/:taskId",
+  [authJwt.verifyToken],
   task_controller.task_get_by_id
 );
-router.post("/user/:userId/course/courseId/task/", task_controller.task_post);
+router.post(
+  "/user/:userId/course/courseId/task/",
+  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
+  task_controller.task_post
+);
 
 router.put(
   "/user/:userId/course/courseId/task/:taskId",
+  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
   task_controller.task_post
 );
 
 router.delete(
   "/user/:userId/course/courseId/task/:taskId",
+  [authJwt.verifyToken, authJwt.isTeacher, authJwt.isAdmin],
   task_controller.task_delete
 );
 

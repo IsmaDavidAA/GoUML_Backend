@@ -13,8 +13,8 @@ export const createRoles = async () => {
 
     // Create default Roles
     const values = await Promise.all([
-      new Role({ roleName: "user" }).save(),
-      new Role({ roleName: "moderator" }).save(),
+      new Role({ roleName: "student" }).save(),
+      new Role({ roleName: "teacher" }).save(),
       new Role({ roleName: "admin" }).save(),
     ]);
 
@@ -28,7 +28,7 @@ export const createAdmin = async () => {
   // check for an existing admin user
   const user = await User.findOne({ email: "admin@localhost" });
   // get roles _id
-  const roles = await Role.find({ roleName: { $in: ["admin", "moderator"] } });
+  const roles = await Role.find({ roleName: { $in: ["admin"] } });
 
   if (!user) {
     // create a new admin user
