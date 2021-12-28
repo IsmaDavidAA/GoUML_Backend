@@ -12,7 +12,7 @@ var compression = require("compression");
 var helmet = require("helmet");
 
 var app = express();
-app.listen(3000);
+// app.listen(3000);
 // Set up mongoose connection
 var mongoose = require("mongoose");
 var dev_db_url =
