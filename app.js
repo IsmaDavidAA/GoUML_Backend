@@ -3,10 +3,10 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-var populateDB = require("./src/config/populatedb");
+var populateDB = require("./config/populatedb");
 
-var indexRouter = require("./src/routes/index");
-var api = require("./src/routes/api.routes");
+var indexRouter = require("./routes/index");
+var api = require("./routes/api.routes");
 
 var compression = require("compression");
 var helmet = require("helmet");
@@ -28,7 +28,7 @@ var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // view engine setup
-app.set("views", path.join(__dirname, "./src/views"));
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 
 app.use(logger("dev"));
