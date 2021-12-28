@@ -1,13 +1,12 @@
-import { createRoles, createAdmin } from "./populatedb";
-import { verifyToken } from "./src/middleware";
+import { createRoles, createAdmin } from "./config/populatedb";
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-var indexRouter = require("./src/routes/index");
-var api = require("./src/routes/api.routes");
+var indexRouter = require("./routes/index");
+var api = require("./routes/api.routes");
 
 var compression = require("compression");
 var helmet = require("helmet");
@@ -50,7 +49,6 @@ app.use(function (req, res, next) {
 });
 createRoles();
 createAdmin();
-
 // error handler
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development

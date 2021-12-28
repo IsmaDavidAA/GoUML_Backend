@@ -6,8 +6,9 @@
   },
   "private": true,
   "scripts": {
-    "dev": "nodemon ./app.js --exec babel-node",
-    "start": "node bin/www"
+    "dev": "nodemon ./src/app.js --exec babel-node",
+    "start": "node ./bin/www",
+    "serverstart": "DEBUG=express-locallibrary-tutorial:* npm run devstart"
   },
   "dependencies": {
     "async": "^3.2.0",

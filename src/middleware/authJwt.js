@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import config from "../../config";
+import config from "../config/config";
 import User from "../models/userModel";
 import Role from "../models/rolesModel";
 

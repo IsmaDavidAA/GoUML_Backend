@@ -1,7 +1,7 @@
 import User from "../models/userModel";
 import Role from "../models/rolesModel";
 import jwt from "jsonwebtoken";
-import config from "../../config";
+import config from "../config/config";
 
 var async = require("async");
 

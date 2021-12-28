@@ -1,5 +1,5 @@
-import Role from "./src/models/rolesModel";
-import User from "./src/models/userModel";
+import Role from "../models/rolesModel";
+import User from "../models/userModel";
 import bcrypt from "bcryptjs";
 import async from "async";
 
