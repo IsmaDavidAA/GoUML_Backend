@@ -1,37 +1,37 @@
+import { createRoles, createAdmin } from "./populatedb";
+import { verifyToken } from "./src/middleware";
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser")
 var logger = require("morgan");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var api = require("./routes/api");
+var indexRouter = require("./src/routes/index");
+var api = require("./src/routes/api.routes");
 
 var compression = require("compression");
 var helmet = require("helmet");
 
 var app = express();
-
-var bcrypt = require("bcrypt");
-var user = requiere("./public/user");
+app.listen(3000);
 // Set up mongoose connection
 var mongoose = require("mongoose");
 var dev_db_url =
   "mongodb+srv://GoUML:dbgouml@cluster0.aomqo.mongodb.net/GoUML?retryWrites=true&w=majority";
 var mongoDB = process.env.MONGODB_URI || dev_db_url;
-mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 // view engine setup
-app.set("views", path.join(__dirname, "views"));
+app.set("views", path.join(__dirname, "./src/views"));
 app.set("view engine", "pug");
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}))
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -48,6 +48,8 @@ app.use("/api", api);
 app.use(function (req, res, next) {
   next(createError(404));
 });
+createRoles();
+createAdmin();
 
 // error handler
 app.use(function (err, req, res, next) {
@@ -58,5 +60,6 @@ app.use(function (err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render("error");
-}); 
+});
+
 module.exports = app;
