@@ -9,7 +9,7 @@ var user_controller = require("../controllers/userController");
 var auth = require("../controllers/authController");
 // Diagram Routes
 router.post(
-  "/user/:userId/diagram/",
+  "/diagram/",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isStudent,
@@ -18,15 +18,12 @@ router.post(
   diagram_controller.diagram_post
 );
 
-router.get("/user/:userId/diagram/", diagram_controller.diagram_get_all);
+router.get("/diagram/", diagram_controller.diagram_get_all);
 
-router.get(
-  "/user/:userId/diagram/:diagramId",
-  diagram_controller.diagram_get_by_id
-);
+router.get("/diagram/:diagramId", diagram_controller.diagram_get_by_id);
 
 router.put(
-  "/user/:userId/diagram/:diagramId",
+  "/diagram/:diagramId",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isStudent,
@@ -36,7 +33,7 @@ router.put(
 );
 
 router.delete(
-  "/user/:userId/diagram/:diagramId",
+  "/diagram/:diagramId",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isStudent,
@@ -48,25 +45,25 @@ router.delete(
 // Course Routes
 
 router.get(
-  "/user/:userId/course/",
+  "/course/",
   [middlewareAuth.verifyToken],
   course_controller.course_get_all
 );
 
 router.get(
-  "/user/:userId/course/:courseId",
+  "/course/:courseId",
   [middlewareAuth.verifyToken],
   course_controller.course_get_all_from_a_user
 );
 
 router.get(
-  "/user/:userId/course/:courseId",
+  "/course/:courseId",
   [middlewareAuth.verifyToken],
   course_controller.course_get_by_id
 );
 
 router.post(
-  "/user/:userId/course/",
+  "/course/",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isTeacher,
@@ -76,7 +73,7 @@ router.post(
 );
 
 router.put(
-  "/user/:userId/course/:courseId",
+  "/course/:courseId",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isTeacher,
@@ -86,7 +83,7 @@ router.put(
 );
 
 router.delete(
-  "/user/:userId/course/:courseId",
+  "/course/:courseId",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isTeacher,
@@ -98,24 +95,24 @@ router.delete(
 // Task Routes
 
 router.get(
-  "/user/:userId/course/courseId/task/",
+  "/course/:courseId/task/",
   [middlewareAuth.verifyToken],
   task_controller.task_get_all
 );
 
 router.get(
-  "/user/:userId/course/courseId/task/",
+  "/course/:courseId/task/",
   [middlewareAuth.verifyToken],
   task_controller.task_get_all_in_a_course
 );
 
 router.get(
-  "/user/:userId/course/courseId/task/:taskId",
+  "/course/:courseId/task/:taskId",
   [middlewareAuth.verifyToken],
   task_controller.task_get_by_id
 );
 router.post(
-  "/user/:userId/course/courseId/task/",
+  "/course/:courseId/task/",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isTeacher,
@@ -125,7 +122,7 @@ router.post(
 );
 
 router.put(
-  "/user/:userId/course/courseId/task/:taskId",
+  "/course/:courseId/task/:taskId",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isTeacher,
@@ -135,7 +132,7 @@ router.put(
 );
 
 router.delete(
-  "/user/:userId/course/courseId/task/:taskId",
+  "/course/:courseId/task",
   [
     middlewareAuth.verifyToken,
     middlewareAuth.isTeacher,
